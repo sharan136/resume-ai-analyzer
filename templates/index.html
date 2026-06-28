@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>ResumeAI - Smart Resume Analyzer</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+<div class="logo">
+ResumeAI 🚀
+</div>
+
+
+<div class="nav-links">
+
+<a href="/">Home</a>
+
+<a href="#features">Features</a>
+
+<a href="#about">About</a>
+
+</div>
+
+
+</nav>
+
+
+
+
+<div class="container">
+
+
+
+<!-- HERO SECTION -->
+
+<section class="header">
+
+
+<h1>
+ResumeAI 🚀
+</h1>
+
+
+<p>
+AI-powered resume analysis platform.
+<br>
+Analyze your resume, discover skill gaps,
+and improve your ATS score.
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- FEATURES SECTION -->
+
+<section id="features" class="features">
+
+
+<div class="feature-card">
+
+<h3>
+AI Resume Analysis
+</h3>
+
+<p>
+Analyze skills, ATS compatibility and job matching.
+</p>
+
+</div>
+
+
+
+<div class="feature-card">
+
+<h3>
+Skill Gap Detection
+</h3>
+
+<p>
+Find missing skills and improvement areas.
+</p>
+
+</div>
+
+
+
+
+<div class="feature-card">
+
+<h3>
+Career Insights
+</h3>
+
+<p>
+Get personalized suggestions to improve your resume.
+</p>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<!-- UPLOAD CARD -->
+
+
+<div class="upload-card">
+
+
+<h2>
+Analyze Your Resume
+</h2>
+
+
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+
+
+
+<label>
+Select Career Domain
+</label>
+
+
+<select id="domain" onchange="updateRoles()">
+
+
+<option>
+Select Domain
+</option>
+
+
+{% for domain in domains %}
+
+<option value="{{domain}}">
+{{domain}}
+</option>
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+<label>
+Select Job Role
+</label>
+
+
+<select name="role" id="role">
+
+
+<option>
+Select Role
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+Paste Job Description
+</label>
+
+
+<textarea
+
+name="job_description"
+
+placeholder="Paste the job description here..."
+
+rows="7"
+
+></textarea>
+
+
+
+
+
+<label>
+Upload Resume PDF
+</label>
+
+
+<input
+
+type="file"
+
+name="resume"
+
+accept=".pdf"
+
+>
+
+
+
+
+
+<button type="submit">
+
+Analyze Resume 🚀
+
+</button>
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+<footer id="about">
+
+<p>
+ResumeAI © 2026 | Built with Flask + AI
+</p>
+
+</footer>
+
+
+
+
+
+
+
+<script id="job-data" type="application/json">
+
+{{ jobs | tojson }}
+
+</script>
+
+
+
+
+
+<script>
+
+
+const jobs = JSON.parse(
+
+document.getElementById("job-data").textContent
+
+);
+
+
+
+function updateRoles(){
+
+
+let domain =
+document.getElementById("domain").value;
+
+
+
+let roleDropdown =
+document.getElementById("role");
+
+
+
+roleDropdown.innerHTML =
+"<option>Select Role</option>";
+
+
+
+if(jobs[domain]){
+
+
+jobs[domain].forEach(function(role){
+
+
+let option =
+document.createElement("option");
+
+
+option.value = role;
+
+option.text = role;
+
+
+roleDropdown.appendChild(option);
+
+
+});
+
+
+}
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+</body>
+
+</html>
